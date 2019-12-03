@@ -21,7 +21,11 @@ class opcode_handler():
         def __init__(self):
             self.dataSet = self.read_input()
             self.cursor_position = 0
-            print(len(self.dataSet))
+            # print(len(self.dataSet))
+
+        def reload_input(self):
+            self.dataSet = self.read_input()
+            self.cursor_position = 0
 
         def read_input(self):
             with open(PWD +'/2019/day2/input.txt', 'r') as input_data:
@@ -45,7 +49,7 @@ class opcode_handler():
 
         def opcode_operator(self, operator_loc):
             if self.cursor_position >= len(self.dataSet)-1 :
-                print("exit")
+                # print("exit")
                 return
             operation_type, v1_loc, v2_loc, op_loc = self.get_value(operator_loc), self.get_value(operator_loc+1), self.get_value(operator_loc+2), self.get_value(operator_loc+3)
             if operation_type == 1:
@@ -53,14 +57,14 @@ class opcode_handler():
                 op_value = self.get_value(v1_loc) + self.get_value(v2_loc)
                 self.set_value(op_loc, op_value)
                 # print("::", operation_type, v1_loc, v2_loc)
-                print(operation_type, op_loc, op_value)
+                # print(operation_type, op_loc, op_value)
             if operation_type == 2:
                 #multiplication
                 op_value = self.get_value(v1_loc) * self.get_value(v2_loc)
                 self.set_value(op_loc, op_value)
-                print(operation_type, op_loc, op_value)
+                # print(operation_type, op_loc, op_value)
             if operation_type == 99:
-                print("***",operation_type)
+                # print("***",operation_type)
                 return
             return self.opcode_operator(self.increment_operation_pos())
 
@@ -69,6 +73,20 @@ class opcode_handler():
 
 #Solution
 sln = opcode_handler()
-sln.print_data()
+#P2
 sln.opcode_operator(0)
-sln.print_data()
+output = (sln.get_value(0))
+print('P1', output)
+#P2
+for noun in range(0,100):
+    for verb in range (0,100):
+        sln.reload_input()
+        sln.set_value(1, noun)
+        sln.set_value(2, verb)
+        sln.opcode_operator(0)
+        # sln.print_data()
+        output = (sln.get_value(0))
+        # print(output)
+        if int(output) == 19690720 :
+            print('P2',noun, verb,'Answer',100*noun+verb)
+            break
