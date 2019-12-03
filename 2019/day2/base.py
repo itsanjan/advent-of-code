@@ -21,6 +21,7 @@ class opcode_handler():
         def __init__(self):
             self.dataSet = self.read_input()
             self.cursor_position = 0
+            print(len(self.dataSet))
 
         def read_input(self):
             with open(PWD +'/2019/day2/input.txt', 'r') as input_data:
@@ -29,36 +30,42 @@ class opcode_handler():
                     pass
                 return row
 
-        def print_data(self, pos):
-            return self.dataSet
+        def print_data(self):
+            return print(self.dataSet)
 
         def get_value(self, pos):
-            return self.dataSet[pos]
+            return int(self.dataSet[pos])
 
         def set_value(self, pos, value):
-            print(self.dataSet[10])
-            self.dataSet[pos] = value
-            print(self.dataSet[10])
+            self.dataSet[int(pos)] = int(value)
 
         def increment_operation_pos(self):
             self.cursor_position += 4
             return self.cursor_position
 
-        def opcode_operator(self, operator_loc, v1_loc, v2_loc, op_loc):
-            operation_type, v1_loc, v2_loc, op_loc =
+        def opcode_operator(self, operator_loc):
+            if self.cursor_position >= len(self.dataSet)-1 :
+                print("exit")
+                return
+            operation_type, v1_loc, v2_loc, op_loc = self.get_value(operator_loc), self.get_value(operator_loc+1), self.get_value(operator_loc+2), self.get_value(operator_loc+3)
             if operation_type == 1:
                 #addition
                 op_value = self.get_value(v1_loc) + self.get_value(v2_loc)
                 self.set_value(op_loc, op_value)
+                # print("::", operation_type, v1_loc, v2_loc)
+                print(operation_type, op_loc, op_value)
             if operation_type == 2:
                 #multiplication
                 op_value = self.get_value(v1_loc) * self.get_value(v2_loc)
                 self.set_value(op_loc, op_value)
+                print(operation_type, op_loc, op_value)
             if operation_type == 99:
-                pass
-            self.opcode_operator(increment_operation_pos())
+                print("***",operation_type)
+                return
+            return self.opcode_operator(self.increment_operation_pos())
 
 #Solution
 sln = opcode_handler()
-print(sln.get_value(10))
-sln.set_value(10,33)
+sln.print_data()
+sln.opcode_operator(0)
+sln.print_data()
