@@ -64,6 +64,9 @@ class opcode_handler():
                 return
             return self.opcode_operator(self.increment_operation_pos())
 
+        # def compute():
+        #     for i in range(0, len(self.dataSet)-1,4)
+
 #Solution
 sln = opcode_handler()
 sln.print_data()
