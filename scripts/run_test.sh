@@ -1,2 +1,2 @@
 export PYTHONPATH="$PWD/src"
-python main.py
+python -m unittest base
